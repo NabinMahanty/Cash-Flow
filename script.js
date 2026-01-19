@@ -45,9 +45,9 @@ window.addEventListener("load", function () {
     const expenses = JSON.parse(savedExpense);
 
     totalExpense = 0;
-    expenses.forEach((expense) => {
+    expenses.forEach((expense, index) => {
       const li = this.document.createElement("li");
-      li.textContent = `${expense.name} - ${expense.amount}`;
+      li.innerHTML = `${expense.name} - ${expense.amount} <button class="delete-btn" data-index="${index}">❌</button>`;
       expenseList.appendChild(li);
       totalExpense += expense.amount;
     });
@@ -65,14 +65,14 @@ addExpenseBtn.addEventListener("click", function () {
     return;
   }
 
-  // Create list item
-  const li = document.createElement("li");
-  li.textContent = `${name} - ${amount}`;
-  expenseList.appendChild(li);
-
   let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
   expenses.push({ name, amount });
   localStorage.setItem("expenses", JSON.stringify(expenses));
+
+  // Create list item with delete button
+  const li = document.createElement("li");
+  li.innerHTML = `${name} - ${amount} <button class="delete-btn" data-index="${expenses.length - 1}">❌</button>`;
+  expenseList.appendChild(li);
 
   totalExpense += amount;
   totalExpenseDisplay.textContent = totalExpense;
@@ -83,6 +83,51 @@ addExpenseBtn.addEventListener("click", function () {
   expenseNameInput.value = "";
   expenseAmountInput.value = "";
 });
+
+// ================== DELETE EXPENSE ==================
+expenseList.addEventListener("click", function (e) {
+  if (e.target.classList.contains("delete-btn")) {
+    const index = Number(e.target.getAttribute("data-index"));
+
+    let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+
+    // Subtract the deleted expense amount from total
+    totalExpense -= expenses[index].amount;
+
+    // Remove expense from array
+    expenses.splice(index, 1);
+
+    // Update localStorage
+    localStorage.setItem("expenses", JSON.stringify(expenses));
+
+    // Remove the list item from DOM
+    e.target.parentElement.remove();
+
+    // Update displays
+    totalExpenseDisplay.textContent = totalExpense;
+    updateBalance();
+
+    // Reload the list to update indices
+    reloadExpenses();
+  }
+});
+
+// ================== RELOAD EXPENSES ==================
+function reloadExpenses() {
+  expenseList.innerHTML = "";
+  const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+
+  totalExpense = 0;
+  expenses.forEach((expense, index) => {
+    const li = document.createElement("li");
+    li.innerHTML = `${expense.name} - ${expense.amount} <button class="delete-btn" data-index="${index}">❌</button>`;
+    expenseList.appendChild(li);
+    totalExpense += expense.amount;
+  });
+
+  totalExpenseDisplay.textContent = totalExpense;
+  updateBalance();
+}
 
 // ================== UPDATE BALANCE ==================
 function updateBalance() {
