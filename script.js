@@ -23,11 +23,20 @@ setSalaryBtn.addEventListener("click", function () {
     alert("Please enter a valid salary");
     return;
   }
-
   salary = value;
   salaryDisplay.textContent = salary;
-
+  localStorage.setItem("salary", salary);
   updateBalance();
+});
+// ================== LOAD SAVED SALARY==================
+
+window.addEventListener("load", function () {
+  const savedSalary = this.localStorage.getItem("salary");
+  if (savedSalary !== null) {
+    salary = Number(savedSalary);
+    salaryDisplay.textContent = salary;
+    updateBalance();
+  }
 });
 
 // ================== ADD EXPENSE ==================
