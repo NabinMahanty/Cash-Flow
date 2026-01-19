@@ -38,7 +38,23 @@ window.addEventListener("load", function () {
     updateBalance();
   }
 });
+// ================== LOAD SAVED Expenses ==================
+window.addEventListener("load", function () {
+  const savedExpense = this.localStorage.getItem("expenses");
+  if (savedExpense !== null) {
+    const expenses = JSON.parse(savedExpense);
 
+    totalExpense = 0;
+    expenses.forEach((expense) => {
+      const li = this.document.createElement("li");
+      li.textContent = `${expense.name} - ${expense.amount}`;
+      expenseList.appendChild(li);
+      totalExpense += expense.amount;
+    });
+    totalExpenseDisplay.textContent = totalExpense;
+    updateBalance();
+  }
+});
 // ================== ADD EXPENSE ==================
 addExpenseBtn.addEventListener("click", function () {
   const name = expenseNameInput.value.trim();
@@ -52,8 +68,11 @@ addExpenseBtn.addEventListener("click", function () {
   // Create list item
   const li = document.createElement("li");
   li.textContent = `${name} - ${amount}`;
-
   expenseList.appendChild(li);
+
+  let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+  expenses.push({ name, amount });
+  localStorage.setItem("expenses", JSON.stringify(expenses));
 
   totalExpense += amount;
   totalExpenseDisplay.textContent = totalExpense;
