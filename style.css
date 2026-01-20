@@ -4,3 +4,10 @@
   margin: 20px auto;
   display: block;
 }
+
+#remainChart {
+  max-width: 400px;
+  max-height: 400px;
+  margin: 20px auto;
+  display: block;
+}

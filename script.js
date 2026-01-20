@@ -139,7 +139,7 @@ function updateBalance() {
 }
 // ================== ADD Visualization for Expenses ==================
 let expenseChart = null;
-function updateChart() {
+function updateExpenseChart() {
   const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
 
   const ctx = document.getElementById("expenseChart").getContext("2d");
@@ -166,5 +166,56 @@ function updateChart() {
         },
       ],
     },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        title: {
+          display: true,
+          text: "Expense Breakdown",
+        },
+      },
+    },
   });
+}
+
+// ================== ADD Visualization for Remaining Balance VS Total Expenses ==================
+let remainChart = null;
+function updateBudgetChart() {
+  const remaining = salary - totalExpense;
+
+  const ctx = document.getElementById("remainChart").getContext("2d");
+
+  if (remainChart) {
+    remainChart.destroy();
+  }
+  remainChart = new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: ["Remaining Balance", "Total Expenses"],
+      datasets: [
+        {
+          label: "Budget Overview",
+          data: [remaining > 0 ? remaining : 0, totalExpense],
+          backgroundColor: ["#4CAF50", "#FF6384"],
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        title: {
+          display: true,
+          text: "Remaining Balance vs Total Expenses",
+        },
+      },
+    },
+  });
+}
+
+// ================== UPDATE ALL CHARTS ==================
+function updateChart() {
+  updateExpenseChart();
+  updateBudgetChart();
 }
