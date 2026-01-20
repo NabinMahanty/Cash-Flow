@@ -133,9 +133,36 @@ function reloadExpenses() {
 }
 
 // ================== UPDATE BALANCE ==================
+let lowBalanceWarningShown = false;
+
 function updateBalance() {
   const remaining = salary - totalExpense;
   remainingBalanceDisplay.textContent = remaining;
+
+  // Budget Alert: Check if remaining balance is below 10% of salary
+  const threshold = salary * 0.1;
+
+  if (remaining < threshold && remaining >= 0 && salary > 0) {
+    // Turn balance text RED
+    remainingBalanceDisplay.style.color = "red";
+    remainingBalanceDisplay.style.fontWeight = "bold";
+
+    // Show warning alert (only once until balance recovers)
+    if (!lowBalanceWarningShown) {
+      swal({
+        title: "Budget Alert!",
+        text: `Your remaining balance is below 10% of your salary! Only ${remaining} left.`,
+        icon: "warning",
+        button: "OK",
+      });
+      lowBalanceWarningShown = true;
+    }
+  } else {
+    // Reset color to normal
+    remainingBalanceDisplay.style.color = "";
+    remainingBalanceDisplay.style.fontWeight = "";
+    lowBalanceWarningShown = false;
+  }
 }
 // ================== ADD Visualization for Expenses ==================
 let expenseChart = null;
@@ -216,6 +243,6 @@ function updateBudgetChart() {
 
 // ================== UPDATE ALL CHARTS ==================
 function updateChart() {
-  updateExpenseChart();
+  // updateExpenseChart();
   updateBudgetChart();
 }
