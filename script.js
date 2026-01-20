@@ -53,6 +53,7 @@ window.addEventListener("load", function () {
     });
     totalExpenseDisplay.textContent = totalExpense;
     updateBalance();
+    updateChart();
   }
 });
 // ================== ADD EXPENSE ==================
@@ -78,6 +79,7 @@ addExpenseBtn.addEventListener("click", function () {
   totalExpenseDisplay.textContent = totalExpense;
 
   updateBalance();
+  updateChart();
 
   // Clear inputs
   expenseNameInput.value = "";
@@ -127,10 +129,42 @@ function reloadExpenses() {
 
   totalExpenseDisplay.textContent = totalExpense;
   updateBalance();
+  updateChart();
 }
 
 // ================== UPDATE BALANCE ==================
 function updateBalance() {
   const remaining = salary - totalExpense;
   remainingBalanceDisplay.textContent = remaining;
+}
+// ================== ADD Visualization for Expenses ==================
+let expenseChart = null;
+function updateChart() {
+  const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+
+  const ctx = document.getElementById("expenseChart").getContext("2d");
+
+  if (expenseChart) {
+    expenseChart.destroy();
+  }
+  expenseChart = new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: expenses.map((e) => e.name),
+      datasets: [
+        {
+          label: "Expenses",
+          data: expenses.map((e) => e.amount),
+          backgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56",
+            "#4BC0C0",
+            "#9966FF",
+            "#FF9F40",
+          ],
+        },
+      ],
+    },
+  });
 }
