@@ -246,3 +246,72 @@ function updateChart() {
   // updateExpenseChart();
   updateBudgetChart();
 }
+
+// ================== PDF EXPORT ==================
+const downloadReportBtn = document.getElementById("downloadReportBtn");
+
+downloadReportBtn.addEventListener("click", function () {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+ 
+  // Title
+  doc.setFontSize(20);
+  doc.text("Cash-Flow Report", 105, 20, { align: "center" });
+
+  // Date
+  doc.setFontSize(10);
+  const currentDate = new Date().toLocaleDateString();
+  doc.text(`Generated on: ${currentDate}`, 105, 30, { align: "center" });
+
+  // Salary Information
+  doc.setFontSize(14);
+  doc.text("Salary Information", 20, 45);
+  doc.setFontSize(12);
+  doc.text(`Total Salary: ${salary}`, 20, 55);
+
+  // Expense List
+  doc.setFontSize(14);
+  doc.text("Expense List", 20, 70);
+  doc.setFontSize(12);
+
+  const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+
+  if (expenses.length === 0) {
+    doc.text("No expenses recorded.", 20, 80);
+  } else {
+    let yPosition = 80;
+    expenses.forEach((expense, index) => {
+      doc.text(
+        `${index + 1}. ${expense.name}: ${expense.amount}`,
+        20,
+        yPosition,
+      );
+      yPosition += 10;
+
+      // Add new page if needed
+      if (yPosition > 270) {
+        doc.addPage();
+        yPosition = 20;
+      }
+    });
+  }
+
+  // Summary Section
+  const summaryY = expenses.length === 0 ? 95 : 80 + expenses.length * 10 + 15;
+  doc.setFontSize(14);
+  doc.text("Summary", 20, summaryY);
+  doc.setFontSize(12);
+  doc.text(`Total Expenses: ${totalExpense}`, 20, summaryY + 10);
+  doc.text(`Remaining Balance: ${salary - totalExpense}`, 20, summaryY + 20);
+
+  // Save PDF
+  doc.save("cash-flow-report.pdf");
+
+  // Show success message
+  swal({
+    title: "Success!",
+    text: "Your report has been downloaded successfully.",
+    icon: "success",
+    button: "OK",
+  });
+});
