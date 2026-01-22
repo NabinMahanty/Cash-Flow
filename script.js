@@ -61,8 +61,23 @@ addExpenseBtn.addEventListener("click", function () {
   const name = expenseNameInput.value.trim();
   const amount = Number(expenseAmountInput.value);
 
+  if (salary === 0) {
+    swal({
+      title: "No Salary Set!",
+      text: "Please set your salary before adding expenses.",
+      icon: "warning",
+      button: "OK",
+    });
+    return;
+  }
+
   if (name === "" || amount <= 0) {
-    alert("Please enter valid expense details");
+    swal({
+      title: "Please enter valid expense details!",
+      text: "Enter Valid Data",
+      icon: "warning",
+      button: "OK",
+    });
     return;
   }
 
@@ -243,7 +258,7 @@ function updateBudgetChart() {
 
 // ================== UPDATE ALL CHARTS ==================
 function updateChart() {
-  // updateExpenseChart();
+  updateExpenseChart();
   updateBudgetChart();
 }
 
