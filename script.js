@@ -47,7 +47,7 @@ window.addEventListener("load", function () {
     totalExpense = 0;
     expenses.forEach((expense, index) => {
       const li = this.document.createElement("li");
-      li.innerHTML = `${expense.name} - ${expense.amount} <button class="delete-btn" data-index="${index}">❌</button>`;
+      li.innerHTML = `${expense.name} - ${expense.amount} <button class="delete-btn" data-index="${index}">Remove</button>`;
       expenseList.appendChild(li);
       totalExpense += expense.amount;
     });
@@ -72,7 +72,7 @@ addExpenseBtn.addEventListener("click", function () {
 
   // Create list item with delete button
   const li = document.createElement("li");
-  li.innerHTML = `${name} - ${amount} <button class="delete-btn" data-index="${expenses.length - 1}">❌</button>`;
+  li.innerHTML = `${name} - ${amount} <button class="delete-btn" data-index="${expenses.length - 1}">Remove</button>`;
   expenseList.appendChild(li);
 
   totalExpense += amount;
@@ -122,7 +122,7 @@ function reloadExpenses() {
   totalExpense = 0;
   expenses.forEach((expense, index) => {
     const li = document.createElement("li");
-    li.innerHTML = `${expense.name} - ${expense.amount} <button class="delete-btn" data-index="${index}">❌</button>`;
+    li.innerHTML = `${expense.name} - ${expense.amount} <button class="delete-btn" data-index="${index}">Remove</button>`;
     expenseList.appendChild(li);
     totalExpense += expense.amount;
   });
@@ -253,7 +253,7 @@ const downloadReportBtn = document.getElementById("downloadReportBtn");
 downloadReportBtn.addEventListener("click", function () {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
- 
+
   // Title
   doc.setFontSize(20);
   doc.text("Cash-Flow Report", 105, 20, { align: "center" });

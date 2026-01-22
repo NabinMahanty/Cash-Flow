@@ -4,14 +4,6 @@
   box-sizing: border-box;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
-.container {
-  display: flex;
-  gap: 10px;
-}
-.con2 {
-  display: flex;
-  gap: 10px;
-}
 body {
   background-color: #f4f6f8;
   color: #111827;
@@ -24,16 +16,28 @@ h1 {
 p {
   text-align: center;
   color: #6b7280;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
-section {
-  background-color: #ffffff;
+.container {
+  display: flex;
+  gap: 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+.con2 {
+  display: flex;
+  gap: 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+.set_salary,
+.addExp,
+.summary,
+.exp_list {
+  background: #ffffff;
   padding: 16px;
-  margin-bottom: 18px;
   border-radius: 10px;
-  max-width: 520px;
-  margin-left: auto;
-  margin-right: auto;
+  flex: 1;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 input,
@@ -72,8 +76,29 @@ button:hover {
 }
 #expenseList li {
   padding: 8px 6px;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
 }
-
+.charts-container {
+  display: flex;
+  gap: 20px;
+  max-width: 1000px;
+  margin: 30px auto;
+}
+.charts-wrapper {
+  flex: 1;
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+hr {
+  border: none;
+  width: 1;
+  background: #e5e7eb;
+}
 #expenseChart {
   max-width: 400px;
   max-height: 400px;
@@ -86,19 +111,4 @@ button:hover {
   max-height: 400px;
   margin: 20px auto;
   display: block;
-}
-
-#downloadReportBtn {
-  margin-top: 15px;
-  padding: 10px 20px;
-  background-color: #10ce5c;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-#downloadReportBtn:hover {
-  background-color: #0b7dda;
 }
