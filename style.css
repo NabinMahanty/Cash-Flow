@@ -1,3 +1,79 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.container {
+  display: flex;
+  gap: 10px;
+}
+.con2 {
+  display: flex;
+  gap: 10px;
+}
+body {
+  background-color: #f4f6f8;
+  color: #111827;
+  padding: 20px;
+}
+h1 {
+  text-align: center;
+  margin-bottom: 6px;
+}
+p {
+  text-align: center;
+  color: #6b7280;
+  margin-bottom: 20px;
+}
+section {
+  background-color: #ffffff;
+  padding: 16px;
+  margin-bottom: 18px;
+  border-radius: 10px;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+input,
+button {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0 12px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+input {
+  border: 1px solid #d1d5db;
+}
+button {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+button:hover {
+  background-color: #10e1d0;
+}
+
+#totalExpense {
+  font-weight: 400;
+}
+#remainingBalance {
+  font-weight: 700;
+  color: #16a34a;
+}
+#expenseList {
+  list-style: none;
+  margin-top: 10px;
+}
+#expenseList li {
+  padding: 8px 6px;
+}
+
 #expenseChart {
   max-width: 400px;
   max-height: 400px;
